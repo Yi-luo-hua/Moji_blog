@@ -387,10 +387,11 @@ docker-compose logs -f frontend
 
 如有问题或建议，请通过以下方式联系：
 
-- 📧 Email: contact@mojie.blog
-- 🐛 Issues: [GitHub Issues](https://github.com/your-username/mojie-blog/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/your-username/mojie-blog/discussions)
+- 📧 Email: akesakiko@gmail.com
+- 🐛 Issues: [GitHub Issues](https://github.com/Yi-luo-hua/Moji_blog/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/Yi-luo-hua/Moji_blog/discussions)
 
 ---
 
 ⭐ 如果这个项目对您有帮助，请给个 star 支持一下！
+
