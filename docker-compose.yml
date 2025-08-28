@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # PostgreSQL 数据库
+  postgres:
+    image: postgres:15-alpine
+    container_name: mojie-postgres
+    environment:
+      POSTGRES_DB: mojie_blog
+      POSTGRES_USER: mojie_user
+      POSTGRES_PASSWORD: mojie_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - mojie-network
+
+  # 后端 API 服务
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mojie-backend
+    environment:
+      NODE_ENV: production
+      PORT: 8000
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: mojie_blog
+      DB_USER: mojie_user
+      DB_PASSWORD: mojie_password
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    networks:
+      - mojie-network
+    volumes:
+      - ./backend/uploads:/app/uploads
+
+  # 前端应用
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: mojie-frontend
+    environment:
+      NEXT_PUBLIC_API_URL: http://backend:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - mojie-network
+
+volumes:
+  postgres_data:
+
+networks:
+  mojie-network:
+    driver: bridge
